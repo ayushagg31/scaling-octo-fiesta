@@ -14,8 +14,8 @@ async function checkFileSize(filePath, maxFileSizeMB) {
   }
 }
 
-export const ytHandler = async (event) => {
-  const { maxFileSizeMB, ytUrl, userEmail, collectionId } = event;
+export const ytHandler = async (payload) => {
+  const { maxFileSizeMB, ytUrl, userEmail, collectionId } = payload;
   const fileType = "mp3";
   const folderPath = "/tmp";
   const fileName = `${collectionId}.${fileType}`;
@@ -54,14 +54,14 @@ export const ytHandler = async (event) => {
       };
     }
 
-    const response = await AudioLoader(filePath);
+    const transcript = await AudioLoader(filePath);
 
     return {
       status: 200,
       collectionName: videoTitle,
       collectionId,
       ytUrl,
-      ...response,
+      transcript,
     };
   } catch (err) {
     console.error(`Failed to transcribe - ${userEmail}`, err);
