@@ -62,9 +62,15 @@ export const ytHandler = async (payload) => {
       collectionId,
       ytUrl,
       transcript,
+      fileType,
+      userEmail
     };
   } catch (err) {
     console.error(`Failed to transcribe - ${userEmail}`, err);
-    throw new Error(`Failed to transcribe: ${err.message}`);
+    return {
+      status: 500,
+      error: `Failed to transcribe: ${err.message}`,
+      collectionId,
+    };
   }
 };
